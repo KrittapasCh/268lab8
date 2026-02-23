@@ -1,59 +1,30 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-int random1to100();
-void printAr(int numAr[],int numArSize);
-int checkNum(int numAr[],int numArSize);
-int searchNum(int numAr[],int numArSize,int target);
 
 int main() {
-    int N,i;
-    int A[100];
-    scanf("%d",&N);
-    if (N>100) 
-		N=100;
-    srand(time(NULL));
-    for (i=0;i<N;i++)
-        A[i]=checkNum(A,i);
-       
-    printf("\n********\n");
-    printAr(A,N);
-    
-    return 0;
-}
-void printAr(int numAr[],int numArSize) {
-    int i;
-    for (i=0;i<numArSize;i++)
-        printf("%d ",numAr[i]);
-} 
+    int score[4] = {80,65,90,70};
+    int best[3];
+    int i, j, max, maxIndex;
 
-int checkNum(int numAr[],int numArSize) {
-    int rnum;
-    rnum=random1to100();
-    while (searchNum(numAr,numArSize,rnum)) {
-        rnum=random1to100();
+    for(i=0;i<3;i++) {
+
+        max = score[0];
+        maxIndex = 0;
+
+        for(j=1;j<4;j++){
+            if(score[j] > max){
+                max = score[j];
+                maxIndex = j;
+            }
+        }
+
+        best[i] = max;
+
+        score[maxIndex] = -1;
     }
-    return rnum;
-}
 
-int searchNum(int numAr[],int numArSize, int target) {
-        //sol1* use Linear search
-        //sol2 use binary search  see.Lab6no9-10 
-        int i,found=0;
-        for (i=0;i<=numArSize;i++){
-        	// your code here 
-        	if (numAr[i] == target){
-        		found =1;
-        		break;
-			}
-		}
-        
+    printf("Best 3 scores:\n");
+    for(i=0;i<3;i++)
+        printf("%d ", best[i]);
 
-        return found;
-}
-
-int random1to100() {
-    int random_num = (rand() % 100) + 1;
-    printf("%d ", random_num);
-    return random_num;
+    return 0;
 }
